@@ -52,6 +52,7 @@ body {
 	background: white;
 	position: fixed;
 	padding-top: 35px;
+	z-index: 9999999999999999999999999;
 }
 
 .sidebar a {
@@ -87,6 +88,12 @@ body {
 }
 .sidebar .crossBtn:hover{
 	color: red;
+}
+.fa-bars:hover{
+	cursor: pointer;
+}
+.custom-file input{
+	cursor: pointer;
 }
 @media only screen and(max-width:600px) {
 	.sidebar {

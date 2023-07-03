@@ -6,15 +6,29 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Range;
 
 @Entity
 public class Contact {
 	@Id
 	private int cid;
+	@NotBlank(message = "User name can't be blank")
 	private String name;
 	private String nickName;
 	private String work;
+	@Pattern(regexp = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+			+ "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$", message = "It allows numeric values from 0 to 9.\r\n"
+					+ "Both uppercase and lowercase letters from a to z are allowed.\r\n"
+					+ "Allowed are underscore “_”, hyphen “-“, and dot “.”\r\n"
+					+ "Dot isn't allowed at the start and end of the local part.\r\n"
+					+ "Consecutive dots aren't allowed.")
 	private String email;
+	@Size(min = 10, max = 10, message = "Contact no should be exact 10 characters")
+	@Pattern(regexp = "(^$|[0-9]{10})", message = "Only numbers are allowed")
 	private String phone;
 	private String image;
 	@Column(length = 5000)
