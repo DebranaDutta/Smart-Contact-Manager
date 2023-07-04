@@ -18,6 +18,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -45,6 +46,8 @@ public class UserController {
 	private UserRepository userRepository;
 	@Autowired
 	private ContactRepository contactRepository;
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	// Method for adding common data to response
 	@ModelAttribute
@@ -196,11 +199,37 @@ public class UserController {
 		}
 		return "redirect:/user/contact/" + contact.getCid();
 	}
-	
-	//User profile Handler
+
+	// User profile Handler
 	@GetMapping("/profile")
 	public String userProfile(Model model) {
-		model.addAttribute("title","User Profile");
+		model.addAttribute("title", "User Profile");
 		return "Normal/profile";
+	}
+
+	// Open Settings Handler
+	@GetMapping("/settings")
+	public String OpenSettings(Model model) {
+		model.addAttribute("title", "Settings");
+		return "Normal/settings";
+	}
+
+	// Handler for changing password
+	@PostMapping("/change-password")
+	public String changePassword(@RequestParam("old-password") String oldPassword,
+			@RequestParam("new-password") String newPassword, Principal principal, HttpSession session) {
+		User user = this.userRepository.getUserByUserName(principal.getName());
+		String password = user.getPassword();
+		if (this.bCryptPasswordEncoder.matches(oldPassword, password)) {
+			// Change the password
+			user.setPassword(this.bCryptPasswordEncoder.encode(newPassword));
+			this.userRepository.save(user);
+			session.setAttribute("message", new Message("Your password is updated!!", "success"));
+		} else {
+			// error
+			session.setAttribute("message", new Message("Wrong old password, please check again!!", "danger"));
+			return "redirect:/user/settings";
+		}
+		return "redirect:/user/index";
 	}
 }

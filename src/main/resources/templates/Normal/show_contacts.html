@@ -13,45 +13,48 @@
 				<h2 class="text-center">Your contacts</h2>
 				<!-- start of searchbar-->
 				<div class="search-container my-4">
-					<input type="text" class="form-control" id="search-input" placeholder="Search your contacts" onkeyup="Search()"/>
+					<input type="text" class="form-control" id="search-input" placeholder="Search your contacts"
+						onkeyup="Search()" />
 					<div class="search-result">
 						<!--result goes here-->
 						<h1>This is result</h1>
 					</div>
 				</div>
 				<!-- end of searchbar-->
-				<table class="table">
-					<thead>
-						<tr>
-							<th scope="col" class="text-center">ID</th>
-							<th scope="col" class="text-center">Name</th>
-							<th scope="col" class="text-center">Email</th>
-							<th scope="col" class="text-center">Phone</th>
-							<th scope="col" class="text-center">Work</th>
-							<th scope="col" class="text-center">Action</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="c:${contacts}">
-							<th scope="row" class="text-center" th:text="'SCM2023'+${c.cid}">1</th>
-							<td class="text-center">
-								<img class="my_profile_picture" th:src="@{'/IMG/'+${c.image}}"
-									alt="profile photo" /><span th:text="${c.name+' '+c.nickName}"></span>
-							</td>
-							<td class="text-center"><a th:href="@{'/user/contact/'+${c.cid}}"><span
-										th:text="${c.email}"></span></a></td>
-							<td class="text-center" th:text="${c.phone}"></td>
-							<td class="text-center" th:text="${c.work}"></td>
-							<td class="text-center">
-								<a href="#" th:onclick="|deleteContact(${c.cid})|"
-									class="btn btn-danger btn-sm">Delete</a>
-								<form method="post" th:action="@{'/user/update-contact/'+${c.cid}}" class="mt-2">
-									<button type="submit" class="btn btn-primary btn-sm">Update</button>
-								</form>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<div class="table-responsive">
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col" class="text-center">ID</th>
+								<th scope="col" class="text-center">Name</th>
+								<th scope="col" class="text-center">Email</th>
+								<th scope="col" class="text-center">Phone</th>
+								<th scope="col" class="text-center">Work</th>
+								<th scope="col" class="text-center">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="c:${contacts}">
+								<th scope="row" class="text-center" th:text="'SCM2023'+${c.cid}">1</th>
+								<td class="text-center">
+									<img class="my_profile_picture" th:src="@{'/IMG/'+${c.image}}"
+										alt="profile photo" /><span th:text="${c.name+' '+c.nickName}"></span>
+								</td>
+								<td class="text-center"><a th:href="@{'/user/contact/'+${c.cid}}"><span
+											th:text="${c.email}"></span></a></td>
+								<td class="text-center" th:text="${c.phone}"></td>
+								<td class="text-center" th:text="${c.work}"></td>
+								<td class="text-center">
+									<a href="#" th:onclick="|deleteContact(${c.cid})|"
+										class="btn btn-danger btn-sm">Delete</a>
+									<form method="post" th:action="@{'/user/update-contact/'+${c.cid}}" class="mt-2">
+										<button type="submit" class="btn btn-primary btn-sm">Update</button>
+									</form>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 				<!--Start of pagination-->
 				<nav aria-label="Page navigation example">
 					<ul class="pagination">
