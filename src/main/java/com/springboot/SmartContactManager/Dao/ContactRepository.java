@@ -10,10 +10,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
 
 import com.springboot.SmartContactManager.Model.Contact;
+import com.springboot.SmartContactManager.Model.User;
 
 @Component
 public interface ContactRepository extends JpaRepository<Contact, Integer> {
 	// Pagination Method->Pageable will contain 2 things 1. Page number, 2.Page per contact
 	@Query("from Contact as c where c.user.id=:userId")
 	public Page<Contact> findContactsByUser(@Param("userId") int userId, Pageable pageable);
+	
+	//Search
+	public List<Contact> findByNameContainingAllIgnoreCaseAndUser(String keywords, User user);
 }

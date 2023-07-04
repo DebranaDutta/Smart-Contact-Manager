@@ -12,6 +12,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Range;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Contact {
 	@Id
@@ -34,6 +36,7 @@ public class Contact {
 	@Column(length = 5000)
 	private String dscription;
 	@ManyToOne
+	@JsonIgnore
 	private User user;
 
 	public Contact() {
