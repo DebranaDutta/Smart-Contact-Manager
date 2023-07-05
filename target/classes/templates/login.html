@@ -31,6 +31,9 @@
 								<div id="register-link" class="text-right">
 									<a href="/signup" class="text-info">Register here</a>
 								</div>
+								<div class="container text-center">
+									<a th:href="@{/forgot}">Forgot Password ?</a>
+								</div>
 							</form>
 
 						</div>
@@ -38,6 +41,8 @@
 							<div th:if="${param.error}" class="alert alert-danger">Invalid username and password
 							</div>
 							<div th:if="${param.logout}" class="alert alert-success">You have been logged out
+							</div>
+							<div th:if="${param.change}" class="alert alert-success">Password Changed Successfully
 							</div>
 						</div>
 					</div>
